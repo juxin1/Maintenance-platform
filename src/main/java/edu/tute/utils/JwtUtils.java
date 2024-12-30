@@ -10,7 +10,7 @@ import java.util.Map;
 public class JwtUtils {
 
     // 秘钥
-    private static final String SECRET_KEY = "itheima";
+    private static final String SECRET_KEY = "tute";
     // 令牌过期时间，设置为2小时（以毫秒为单位）
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 2;
 

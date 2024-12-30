@@ -12,13 +12,14 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+
 /*
  * 令牌校验过滤器(和拦截器开一个即可，不然浪费性能，如果开启两个，先经过过滤器，在经过拦截器)
  * 过滤器范围更广(全局)，拦截器只作用spring中的请求，过滤器作用servlet的请求
  * */
 @WebFilter(urlPatterns = "/*")
 public class TokenFilter implements Filter {
-    private static final Logger log = LoggerFactory.getLogger(com.fasterxml.jackson.core.filter.TokenFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(TokenFilter.class);
 
     //初始化, 只执行一次(一般用不到，可以不重写此方法)
     @Override
@@ -40,6 +41,10 @@ public class TokenFilter implements Filter {
             log.info("登录请求，放行");
             filterChain.doFilter(request, response);
             return;
+        } else if (requestURI.contains("/register")) {
+            log.info("注册请求，放行");
+            filterChain.doFilter(request, response);
+            return;
         }
         //获取请求头中的令牌
         String token = request.getHeader("token");
@@ -53,9 +58,13 @@ public class TokenFilter implements Filter {
         //解析令牌
         try {
             Claims claims = JwtUtils.parseToken(token);
-            Integer empId = Integer.valueOf(claims.get("id").toString());
-            CurrentHolder.setCurrentId(empId);
-            log.info("令牌校验通过，当前用户id为：{} ,将其存入ThreadLocal", empId);
+            Integer userId = Integer.valueOf(claims.get("userId").toString());
+            String username = claims.get("username").toString();
+            String roleType = claims.get("roleType").toString();
+            CurrentHolder.setCurrentId(userId);
+            CurrentHolder.setCurrentUsername(username);
+            CurrentHolder.setCurrentRoleType(roleType);
+            log.info("令牌校验通过，当前用户id为：{} ,将其存入ThreadLocal", userId);
         } catch (Exception e) {
             log.info("令牌校验失败，拦截请求，响应401状态码");
             //设置状态码(401)

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.tute.mapper.OrderMapper">
+
+    <!--    创建订单(用户)    -->
+    <insert id="createOrder">
+        insert into Orders(user_id, product_model, fault_description, customer_phone)
+        values (#{userId}, #{productModel}, #{faultDescription}, #{customerPhone})
+    </insert>
+
+    <!--    更新维修进度(管理员，维修师)    -->
+    <update id="updateOrder">
+        update Orders
+        <set>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+        </set>
+        where order_id = #{orderId}
+    </update>
+
+    <!--    查询订单(管理员)    -->
+    <select id="getOrder" resultType="edu.tute.pojo.Order">
+        select order_id,
+               user_id,
+               product_model,
+               fault_description,
+               customer_phone,
+               repair_order_date,
+               status,
+               actual_cost,
+               completion_date
+        from Orders
+        where order_id = #{orderId}
+    </select>
+</mapper>

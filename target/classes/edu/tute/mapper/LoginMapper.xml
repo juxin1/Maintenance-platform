@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.tute.mapper.LoginMapper">
+    <insert id="register">
+        insert into Users(username, password, phone_number, role_type)
+        values (#{username}, #{password}, #{phoneNumber}, #{roleType})
+    </insert>
+
+    <select id="getUser" resultType="edu.tute.pojo.User">
+        select *
+        from Users
+        where username = #{username}
+    </select>
+
+    <select id="getUsernameAndPassword" resultType="edu.tute.pojo.User">
+        select *
+        from Users
+        where username = #{username}
+          and password = #{password}
+    </select>
+</mapper>

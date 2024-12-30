@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -17,9 +18,9 @@ public class Order {
     private String faultDescription;    // 故障描述
     private String customerPhone;   // 客户联系方式
     private String status;  // 订单状态
-    private double actualCost;
+    private double actualCost; // 实际花费
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDate repairOrderDate;   // 报修时间
+    private LocalDateTime repairOrderDate;   // 报修时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDate completeDate; // 完成时间
+    private LocalDateTime completeDate; // 完成时间
 }
