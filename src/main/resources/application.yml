@@ -1,1 +1,31 @@
-spring.application.name=Maintenance-platform
+spring:
+  application:
+    name: Maintenance-platform
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://dbconn.sealoshzh.site:31850/sports?useSSL=false&serverTimezone=UTC
+    username: root
+    password: d2vk24kp
+
+  # Mybatis ??
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+
+
+server:
+  port: 8080
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/sports
+#    username: root
+#    password: 1234
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
+#server:
+#  port: 8080
