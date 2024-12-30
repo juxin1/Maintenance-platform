@@ -23,4 +23,5 @@ public class Order {
     private LocalDateTime repairOrderDate;   // 报修时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime completeDate; // 完成时间
+
 }
