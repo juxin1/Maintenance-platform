@@ -6,5 +6,57 @@
 
 <mapper namespace="edu.tute.mapper.RepairMapper">
 
+    <!--    维修任务抢单（维修师）    -->
+    <insert id="repairAssignment">
+        insert into Repair_Assignments(order_id, user_id, status, assignment_date, expected_completion_date)
+        values (#{orderId}, #{userId}, #{status}, #{assignmentDate}, #{expectedCompletionDate})
+    </insert>
 
+    <update id="updateRepairStatus">
+        update Repair_Assignments
+        <set>
+            <if test="repair.status != null and repair.status != ''">
+                status = #{repair.status},
+            </if>
+            <if test="repair.expectedCompletionDate != null">
+                expected_completion_date = #{repair.expectedCompletionDate},
+            </if>
+        </set>
+        where assignment_id = #{assignmentId}
+    </update>
+
+    <!--    查询权限    -->
+    <select id="getRoleType" resultType="java.lang.String">
+        select role_type
+        from Users
+        where user_id = #{userId}
+    </select>
+    <select id="getAllRepairAssignment" resultType="edu.tute.pojo.Order">
+        select o.order_id,
+               o.user_id,
+               o.product_model,
+               o.fault_description,
+               o.customer_phone,
+               o.repair_order_date,
+               o.status,
+               o.actual_cost,
+               o.completion_date
+        from Orders o
+                 left join Repair_Assignments ra on o.order_id = ra.order_id
+    </select>
+    <select id="getRepairAssignment" resultType="edu.tute.pojo.Order">
+        select order_id,
+               user_id,
+               product_model,
+               fault_description,
+               customer_phone,
+               status,
+               actual_cost,
+               repair_order_date,
+               completion_date
+        from Orders
+        where order_id in (select order_id
+                           from Repair_Assignments
+                           where user_id = #{userId})
+    </select>
 </mapper>

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -15,8 +16,6 @@ public class Repair {
     private Integer orderId;    // 订单id
     private Integer userId; // 维修人员id
     private String status;  // 维修任务状态
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDate assignmentDate;   // 维修任务日期
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime assignmentDate;   // 维修任务日期
     private LocalDate expectedCompletionDate;   // 预期完成时间
 }
